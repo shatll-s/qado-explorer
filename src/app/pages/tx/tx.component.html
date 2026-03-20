@@ -14,7 +14,7 @@
       <tr *ngIf="info.confirmations"><td class="label">Confirmations</td><td>{{ info.confirmations }}</td></tr>
       <tr *ngIf="info.block_height"><td class="label">Block</td><td><a [routerLink]="['/block', info.block_height]">#{{ info.block_height }}</a></td></tr>
       <tr *ngIf="info.timestamp_utc"><td class="label">Timestamp</td><td>{{ formatTimestamp(info.timestamp_utc) }}</td></tr>
-      <tr *ngIf="info.from"><td class="label">From</td><td><a [routerLink]="['/address', info.from]" class="mono">{{ info.from }}</a></td></tr>
+      <tr *ngIf="info.from"><td class="label">From</td><td><span *ngIf="info.from === '0000000000000000000000000000000000000000000000000000000000000000'" class="coinbase">Coinbase (block reward)</span><a *ngIf="info.from !== '0000000000000000000000000000000000000000000000000000000000000000'" [routerLink]="['/address', info.from]" class="mono">{{ info.from }}</a></td></tr>
       <tr *ngIf="info.to"><td class="label">To</td><td><a [routerLink]="['/address', info.to]" class="mono">{{ info.to }}</a></td></tr>
       <tr *ngIf="info.amount_atomic"><td class="label">Amount</td><td class="amount">{{ formatAmount(info.amount_atomic) }} QADO</td></tr>
       <tr *ngIf="info.fee_atomic"><td class="label">Fee</td><td>{{ formatAmount(info.fee_atomic) }} QADO</td></tr>

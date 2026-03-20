@@ -33,6 +33,10 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}/tx/${txid}`)
   }
 
+  getStats(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/stats`)
+  }
+
   getNodeHealth(): Observable<any> {
     return this.http.get(`${this.baseUrl}/node-health`)
   }

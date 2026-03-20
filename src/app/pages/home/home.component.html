@@ -5,16 +5,24 @@
       <div class="stat-value">{{ tip.height }}</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Network</div>
-      <div class="stat-value">{{ health?.network || 'mainnet' }}</div>
-    </div>
-    <div class="stat-card">
       <div class="stat-label">Last Block</div>
       <div class="stat-value">{{ timeAgo(tip.timestamp_utc) }}</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Symbol</div>
-      <div class="stat-value">{{ network?.symbol || 'QADO' }}</div>
+      <div class="stat-label">Avg Block Time</div>
+      <div class="stat-value">{{ stats?.avg_block_time || '?' }}s</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Hashrate</div>
+      <div class="stat-value">{{ stats ? formatHashrate(stats.hashrate) : '...' }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Difficulty</div>
+      <div class="stat-value">{{ stats ? formatDifficulty(stats.difficulty) : '...' }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Supply</div>
+      <div class="stat-value">{{ stats?.total_supply | number }} QADO</div>
     </div>
   </div>
 
@@ -33,10 +41,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let block of blocks">
+      <tr *ngFor="let block of blocks"
+          [class.miner-highlight]="hoveredMiner && block.miner === hoveredMiner">
         <td><a [routerLink]="['/block', block.height]">{{ block.height }}</a></td>
         <td><a [routerLink]="['/block', block.hash]" class="hash">{{ shortenHash(block.hash) }}</a></td>
-        <td><a [routerLink]="['/address', block.miner]" class="miner">{{ shortenHash(block.miner) }}</a></td>
+        <td>
+          <a [routerLink]="['/address', block.miner]" class="miner"
+             (mouseenter)="onMinerHover(block.miner)"
+             (mouseleave)="onMinerHover(null)">{{ shortenHash(block.miner) }}</a>
+        </td>
         <td>{{ block.tx_count || block.transactions?.length || 0 }}</td>
         <td>{{ timeAgo(block.timestamp_utc) }}</td>
       </tr>
