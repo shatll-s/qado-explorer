@@ -1,0 +1,40 @@
+<div class="block-page">
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="block">
+    <h2>Block #{{ block.height }}</h2>
+
+    <table class="detail-table">
+      <tr><td class="label">Hash</td><td class="mono">{{ block.hash }}</td></tr>
+      <tr><td class="label">Height</td><td>{{ block.height }}</td></tr>
+      <tr *ngIf="block.prev_hash"><td class="label">Previous</td><td><a [routerLink]="['/block', block.prev_hash]" class="mono">{{ block.prev_hash }}</a></td></tr>
+      <tr *ngIf="block.timestamp"><td class="label">Timestamp</td><td>{{ block.timestamp }}</td></tr>
+      <tr *ngIf="block.target"><td class="label">Target</td><td class="mono">{{ block.target }}</td></tr>
+      <tr *ngIf="block.nonce"><td class="label">Nonce</td><td>{{ block.nonce }}</td></tr>
+      <tr *ngIf="block.miner"><td class="label">Miner</td><td><a [routerLink]="['/address', block.miner]" class="mono">{{ block.miner }}</a></td></tr>
+      <tr *ngIf="block.merkle_root"><td class="label">Merkle Root</td><td class="mono">{{ block.merkle_root }}</td></tr>
+    </table>
+
+    <div *ngIf="block.transactions?.length > 0">
+      <h3>Transactions ({{ block.transactions.length }})</h3>
+      <table class="tx-table">
+        <thead>
+          <tr>
+            <th>TxID</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tx of block.transactions">
+            <td><a [routerLink]="['/tx', tx.txid || tx.hash]" class="mono hash">{{ (tx.txid || tx.hash)?.substring(0, 16) }}...</a></td>
+            <td><a *ngIf="tx.sender" [routerLink]="['/address', tx.sender]" class="mono hash">{{ tx.sender?.substring(0, 12) }}...</a><span *ngIf="!tx.sender">coinbase</span></td>
+            <td><a *ngIf="tx.recipient" [routerLink]="['/address', tx.recipient]" class="mono hash">{{ tx.recipient?.substring(0, 12) }}...</a></td>
+            <td>{{ formatAmount(tx.amount) }} QADO</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

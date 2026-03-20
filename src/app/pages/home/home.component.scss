@@ -1,0 +1,22 @@
+.stats-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.stat-card {
+  background: #1a1a2e;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  flex: 1;
+  .stat-label { color: #888; font-size: 0.85rem; }
+  .stat-value { font-size: 1.4rem; font-weight: 600; margin-top: 0.3rem; }
+}
+.blocks-table {
+  width: 100%;
+  border-collapse: collapse;
+  th, td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid #2a2a3e; }
+  th { color: #888; font-weight: 500; }
+  a { color: #6ec6ff; text-decoration: none; &:hover { text-decoration: underline; } }
+  .hash { font-family: monospace; font-size: 0.9rem; }
+}
+.loading { color: #888; padding: 2rem; text-align: center; }

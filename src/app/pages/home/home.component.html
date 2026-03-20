@@ -1,0 +1,39 @@
+<div class="home">
+  <div class="stats-row" *ngIf="tip && network">
+    <div class="stat-card">
+      <div class="stat-label">Height</div>
+      <div class="stat-value">{{ tip.height }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Network</div>
+      <div class="stat-value">{{ network.chain_name || 'Qado' }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Symbol</div>
+      <div class="stat-value">{{ network.symbol || 'QADO' }}</div>
+    </div>
+  </div>
+
+  <h2>Latest Blocks</h2>
+
+  <div *ngIf="loading" class="loading">Loading blocks...</div>
+
+  <table class="blocks-table" *ngIf="!loading && blocks.length > 0">
+    <thead>
+      <tr>
+        <th>Height</th>
+        <th>Hash</th>
+        <th>Txs</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let block of blocks">
+        <td><a [routerLink]="['/block', block.height]">{{ block.height }}</a></td>
+        <td><a [routerLink]="['/block', block.hash]" class="hash">{{ shortenHash(block.hash) }}</a></td>
+        <td>{{ block.tx_count || block.transactions?.length || 0 }}</td>
+        <td>{{ timeAgo(block.timestamp) }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,15 @@
+<div class="address-page">
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="info">
+    <h2>Address</h2>
+    <p class="mono address-hash">{{ address }}</p>
+
+    <table class="detail-table">
+      <tr><td class="label">Balance</td><td>{{ formatAmount(info.balance_atomic || info.balance || 0) }} QADO</td></tr>
+      <tr><td class="label">Nonce</td><td>{{ info.nonce || 0 }}</td></tr>
+      <tr *ngIf="info.pending_outgoing_count"><td class="label">Pending Out</td><td>{{ info.pending_outgoing_count }}</td></tr>
+      <tr *ngIf="info.pending_incoming_count"><td class="label">Pending In</td><td>{{ info.pending_incoming_count }}</td></tr>
+    </table>
+  </div>
+</div>

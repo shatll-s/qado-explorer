@@ -1,0 +1,18 @@
+<div class="app-container">
+  <header class="app-header">
+    <a routerLink="/" class="logo">QADO Explorer</a>
+    <div class="search-wrapper">
+      <input #searchInput
+        type="text"
+        placeholder="Search by height, hash, address, or txid..."
+        (keydown.enter)="onSearch(searchInput.value); searchInput.value = ''"
+        class="search-input">
+    </div>
+  </header>
+  <main class="app-main">
+    <router-outlet />
+  </main>
+  <footer class="app-footer">
+    <span>Qado Blockchain Explorer</span>
+  </footer>
+</div>

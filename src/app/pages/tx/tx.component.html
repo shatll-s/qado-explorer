@@ -1,0 +1,11 @@
+<div class="tx-page">
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="info">
+    <h2>Transaction</h2>
+    <p class="mono">{{ txid }}</p>
+    <table class="detail-table">
+      <tr><td class="label">Confirmations</td><td>{{ info.confirmations ?? info }}</td></tr>
+    </table>
+  </div>
+</div>
