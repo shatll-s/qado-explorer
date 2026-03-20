@@ -4,19 +4,27 @@
   margin-bottom: 2rem;
 }
 .stat-card {
-  background: #1a1a2e;
+  background: #fff;
+  border: 1px solid #e2e5ec;
   border-radius: 8px;
   padding: 1rem 1.5rem;
   flex: 1;
-  .stat-label { color: #888; font-size: 0.85rem; }
-  .stat-value { font-size: 1.4rem; font-weight: 600; margin-top: 0.3rem; }
+  .stat-label { color: #6b7280; font-size: 0.85rem; }
+  .stat-value { font-size: 1.4rem; font-weight: 600; margin-top: 0.3rem; color: #1a1a2e; }
 }
 .blocks-table {
   width: 100%;
   border-collapse: collapse;
-  th, td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid #2a2a3e; }
-  th { color: #888; font-weight: 500; }
-  a { color: #6ec6ff; text-decoration: none; &:hover { text-decoration: underline; } }
+  background: #fff;
+  border: 1px solid #e2e5ec;
+  border-radius: 8px;
+  overflow: hidden;
+  th, td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid #f0f1f3; }
+  th { color: #6b7280; font-weight: 500; background: #f9fafb; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f9fafb; }
+  a { color: #2563eb; text-decoration: none; &:hover { text-decoration: underline; } }
   .hash { font-family: monospace; font-size: 0.9rem; }
+  .miner { font-family: monospace; font-size: 0.85rem; }
 }
-.loading { color: #888; padding: 2rem; text-align: center; }
+.loading { color: #6b7280; padding: 2rem; text-align: center; }

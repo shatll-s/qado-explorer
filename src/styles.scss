@@ -2,12 +2,12 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #0f0f1a;
-  color: #e0e0e0;
+  background: #f5f6fa;
+  color: #1a1a2e;
   min-height: 100vh;
 }
 
-a { color: #6ec6ff; text-decoration: none; &:hover { text-decoration: underline; } }
+a { color: #2563eb; text-decoration: none; &:hover { text-decoration: underline; } }
 
 .app-container {
   display: flex;
@@ -20,13 +20,14 @@ a { color: #6ec6ff; text-decoration: none; &:hover { text-decoration: underline;
   align-items: center;
   gap: 2rem;
   padding: 1rem 2rem;
-  background: #16162b;
-  border-bottom: 1px solid #2a2a3e;
+  background: #fff;
+  border-bottom: 1px solid #e2e5ec;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 
   .logo {
     font-size: 1.3rem;
     font-weight: 700;
-    color: #fff;
+    color: #1a1a2e;
     text-decoration: none;
     white-space: nowrap;
   }
@@ -36,14 +37,14 @@ a { color: #6ec6ff; text-decoration: none; &:hover { text-decoration: underline;
   .search-input {
     width: 100%;
     padding: 0.6rem 1rem;
-    border: 1px solid #3a3a5e;
+    border: 1px solid #d1d5db;
     border-radius: 6px;
-    background: #1a1a2e;
-    color: #e0e0e0;
+    background: #f9fafb;
+    color: #1a1a2e;
     font-size: 0.95rem;
     outline: none;
-    &:focus { border-color: #6ec6ff; }
-    &::placeholder { color: #666; }
+    &:focus { border-color: #2563eb; box-shadow: 0 0 0 2px rgba(37,99,235,0.12); }
+    &::placeholder { color: #9ca3af; }
   }
 }
 
@@ -58,10 +59,10 @@ a { color: #6ec6ff; text-decoration: none; &:hover { text-decoration: underline;
 .app-footer {
   padding: 1rem 2rem;
   text-align: center;
-  color: #666;
+  color: #9ca3af;
   font-size: 0.85rem;
-  border-top: 1px solid #2a2a3e;
+  border-top: 1px solid #e2e5ec;
 }
 
-h2 { margin-bottom: 1rem; }
-h3 { margin: 1.5rem 0 0.8rem; }
+h2 { margin-bottom: 1rem; color: #1a1a2e; }
+h3 { margin: 1.5rem 0 0.8rem; color: #1a1a2e; }

@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, RouterLink } from '@angular/router'
 import { ApiService } from '../../services/api.service'
 
 @Component({
   selector: 'app-address',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './address.component.html',
   styleUrl: './address.component.scss'
 })
@@ -15,7 +15,7 @@ export class AddressComponent implements OnInit {
   info: any = null
   error: string | null = null
 
-  constructor(private route: ActivatedRoute, private api: ApiService) {}
+  constructor(private route: ActivatedRoute, private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -27,8 +27,8 @@ export class AddressComponent implements OnInit {
   loadAddress() {
     this.error = null
     this.api.getAddress(this.address).subscribe({
-      next: info => this.info = info,
-      error: err => this.error = err.error?.error || 'Address not found'
+      next: info => { this.info = info; this.cdr.markForCheck() },
+      error: err => { this.error = err.error?.error || 'Address not found'; this.cdr.markForCheck() }
     })
   }
 

@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterLink } from '@angular/router'
 import { ApiService } from '../../services/api.service'
+import { forkJoin } from 'rxjs'
 
 @Component({
   selector: 'app-home',
@@ -13,11 +14,12 @@ import { ApiService } from '../../services/api.service'
 export class HomeComponent implements OnInit, OnDestroy {
   tip: any = null
   network: any = null
+  health: any = null
   blocks: any[] = []
   loading = true
   private refreshTimer: any
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.loadData()
@@ -29,11 +31,24 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
-    this.api.getTip().subscribe(tip => this.tip = tip)
-    this.api.getNetwork().subscribe(net => this.network = net)
-    this.api.getBlocks(20).subscribe(blocks => {
-      this.blocks = blocks
-      this.loading = false
+    forkJoin({
+      tip: this.api.getTip(),
+      network: this.api.getNetwork(),
+      health: this.api.getNodeHealth(),
+      blocks: this.api.getBlocks(20)
+    }).subscribe({
+      next: ({ tip, network, health, blocks }) => {
+        this.tip = tip
+        this.network = network
+        this.health = health
+        this.blocks = blocks
+        this.loading = false
+        this.cdr.markForCheck()
+      },
+      error: () => {
+        this.loading = false
+        this.cdr.markForCheck()
+      }
     })
   }
 
@@ -48,10 +63,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   timeAgo(timestamp: string | number): string {
-    const ts = typeof timestamp === 'string' ? parseInt(timestamp) : timestamp
-    // Qado timestamps are in ticks or unix — detect
-    const unix = ts > 1e12 ? Math.floor(ts / 1000) : ts
+    if (!timestamp) return ''
+    let unix: number
+    if (typeof timestamp === 'string' && timestamp.includes('T')) {
+      unix = Math.floor(new Date(timestamp).getTime() / 1000)
+    } else {
+      const ts = typeof timestamp === 'string' ? parseInt(timestamp) : timestamp
+      unix = ts > 1e12 ? Math.floor(ts / 1000) : ts
+    }
     const diff = Math.floor(Date.now() / 1000) - unix
+    if (diff < 0) return 'just now'
     if (diff < 60) return `${diff}s ago`
     if (diff < 3600) return `${Math.floor(diff / 60)}m ago`
     if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`

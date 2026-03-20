@@ -1,4 +1,8 @@
 <div class="address-page">
+  <nav class="breadcrumb">
+    <a routerLink="/">Home</a> <span class="sep">/</span> <span>Address</span>
+  </nav>
+
   <div *ngIf="error" class="error">{{ error }}</div>
 
   <div *ngIf="info">
@@ -6,10 +10,11 @@
     <p class="mono address-hash">{{ address }}</p>
 
     <table class="detail-table">
-      <tr><td class="label">Balance</td><td>{{ formatAmount(info.balance_atomic || info.balance || 0) }} QADO</td></tr>
+      <tr><td class="label">Balance</td><td class="balance">{{ formatAmount(info.balance_atomic || info.balance || 0) }} QADO</td></tr>
       <tr><td class="label">Nonce</td><td>{{ info.nonce || 0 }}</td></tr>
       <tr *ngIf="info.pending_outgoing_count"><td class="label">Pending Out</td><td>{{ info.pending_outgoing_count }}</td></tr>
       <tr *ngIf="info.pending_incoming_count"><td class="label">Pending In</td><td>{{ info.pending_incoming_count }}</td></tr>
+      <tr *ngIf="info.latest_observed_height"><td class="label">Last Seen Block</td><td><a [routerLink]="['/block', info.latest_observed_height]">{{ info.latest_observed_height }}</a></td></tr>
     </table>
   </div>
 </div>

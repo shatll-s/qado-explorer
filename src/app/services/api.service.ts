@@ -33,6 +33,10 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}/tx/${txid}`)
   }
 
+  getNodeHealth(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/node-health`)
+  }
+
   search(query: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/search?q=${encodeURIComponent(query)}`)
   }

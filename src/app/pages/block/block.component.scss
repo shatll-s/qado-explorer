@@ -1,18 +1,56 @@
+.breadcrumb {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+  a { color: #2563eb; }
+  .sep { margin: 0 0.4rem; }
+}
+.block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  h2 { margin-bottom: 0; }
+}
+.block-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+.nav-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  color: #2563eb;
+  font-size: 0.9rem;
+  background: #fff;
+  &:hover { background: #f3f4f6; text-decoration: none; }
+}
 .detail-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 2rem;
-  td { padding: 0.5rem 1rem; border-bottom: 1px solid #2a2a3e; }
-  .label { color: #888; width: 150px; }
+  background: #fff;
+  border: 1px solid #e2e5ec;
+  border-radius: 8px;
+  overflow: hidden;
+  td { padding: 0.5rem 1rem; border-bottom: 1px solid #f0f1f3; }
+  tr:last-child td { border-bottom: none; }
+  .label { color: #6b7280; width: 150px; }
   .mono { font-family: monospace; font-size: 0.9rem; word-break: break-all; }
-  a { color: #6ec6ff; text-decoration: none; &:hover { text-decoration: underline; } }
+  a { color: #2563eb; text-decoration: none; &:hover { text-decoration: underline; } }
 }
 .tx-table {
   width: 100%;
   border-collapse: collapse;
-  th, td { padding: 0.5rem 1rem; text-align: left; border-bottom: 1px solid #2a2a3e; }
-  th { color: #888; font-weight: 500; }
-  a { color: #6ec6ff; text-decoration: none; &:hover { text-decoration: underline; } }
+  background: #fff;
+  border: 1px solid #e2e5ec;
+  border-radius: 8px;
+  overflow: hidden;
+  th, td { padding: 0.5rem 1rem; text-align: left; border-bottom: 1px solid #f0f1f3; }
+  th { color: #6b7280; font-weight: 500; background: #f9fafb; }
+  tr:last-child td { border-bottom: none; }
+  a { color: #2563eb; text-decoration: none; &:hover { text-decoration: underline; } }
   .hash { font-family: monospace; font-size: 0.85rem; }
+  .mono { font-family: monospace; font-size: 0.85rem; word-break: break-all; }
 }
-.error { color: #ff6b6b; padding: 2rem; text-align: center; }
+.error { color: #ef4444; padding: 2rem; text-align: center; }

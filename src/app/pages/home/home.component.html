@@ -1,16 +1,20 @@
 <div class="home">
-  <div class="stats-row" *ngIf="tip && network">
+  <div class="stats-row" *ngIf="tip">
     <div class="stat-card">
       <div class="stat-label">Height</div>
       <div class="stat-value">{{ tip.height }}</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Network</div>
-      <div class="stat-value">{{ network.chain_name || 'Qado' }}</div>
+      <div class="stat-value">{{ health?.network || 'mainnet' }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Last Block</div>
+      <div class="stat-value">{{ timeAgo(tip.timestamp_utc) }}</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Symbol</div>
-      <div class="stat-value">{{ network.symbol || 'QADO' }}</div>
+      <div class="stat-value">{{ network?.symbol || 'QADO' }}</div>
     </div>
   </div>
 
@@ -23,6 +27,7 @@
       <tr>
         <th>Height</th>
         <th>Hash</th>
+        <th>Miner</th>
         <th>Txs</th>
         <th>Time</th>
       </tr>
@@ -31,8 +36,9 @@
       <tr *ngFor="let block of blocks">
         <td><a [routerLink]="['/block', block.height]">{{ block.height }}</a></td>
         <td><a [routerLink]="['/block', block.hash]" class="hash">{{ shortenHash(block.hash) }}</a></td>
+        <td><a [routerLink]="['/address', block.miner]" class="miner">{{ shortenHash(block.miner) }}</a></td>
         <td>{{ block.tx_count || block.transactions?.length || 0 }}</td>
-        <td>{{ timeAgo(block.timestamp) }}</td>
+        <td>{{ timeAgo(block.timestamp_utc) }}</td>
       </tr>
     </tbody>
   </table>

@@ -1,19 +1,44 @@
 <div class="block-page">
+  <nav class="breadcrumb">
+    <a routerLink="/">Home</a> <span class="sep">/</span> <span>Block #{{ block?.height || blockId }}</span>
+  </nav>
+
   <div *ngIf="error" class="error">{{ error }}</div>
 
   <div *ngIf="block">
-    <h2>Block #{{ block.height }}</h2>
+    <div class="block-header">
+      <h2>Block #{{ block.height }}</h2>
+      <div class="block-nav">
+        <a *ngIf="hasPrev" [routerLink]="['/block', blockHeight - 1]" class="nav-btn">&larr; Prev</a>
+        <a *ngIf="hasNext" [routerLink]="['/block', blockHeight + 1]" class="nav-btn">Next &rarr;</a>
+      </div>
+    </div>
 
     <table class="detail-table">
       <tr><td class="label">Hash</td><td class="mono">{{ block.hash }}</td></tr>
       <tr><td class="label">Height</td><td>{{ block.height }}</td></tr>
       <tr *ngIf="block.prev_hash"><td class="label">Previous</td><td><a [routerLink]="['/block', block.prev_hash]" class="mono">{{ block.prev_hash }}</a></td></tr>
-      <tr *ngIf="block.timestamp"><td class="label">Timestamp</td><td>{{ block.timestamp }}</td></tr>
+      <tr *ngIf="block.timestamp_utc"><td class="label">Timestamp</td><td>{{ formatTimestamp(block.timestamp_utc) }}</td></tr>
+      <tr *ngIf="block.miner"><td class="label">Miner</td><td><a [routerLink]="['/address', block.miner]" class="mono">{{ block.miner }}</a></td></tr>
+      <tr *ngIf="block.tx_count != null"><td class="label">Transactions</td><td>{{ block.tx_count }}</td></tr>
       <tr *ngIf="block.target"><td class="label">Target</td><td class="mono">{{ block.target }}</td></tr>
       <tr *ngIf="block.nonce"><td class="label">Nonce</td><td>{{ block.nonce }}</td></tr>
-      <tr *ngIf="block.miner"><td class="label">Miner</td><td><a [routerLink]="['/address', block.miner]" class="mono">{{ block.miner }}</a></td></tr>
       <tr *ngIf="block.merkle_root"><td class="label">Merkle Root</td><td class="mono">{{ block.merkle_root }}</td></tr>
     </table>
+
+    <div *ngIf="block.txids?.length > 0">
+      <h3>Transaction IDs</h3>
+      <table class="tx-table">
+        <thead>
+          <tr><th>TxID</th></tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let txid of block.txids">
+            <td><a [routerLink]="['/tx', txid]" class="mono">{{ txid }}</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div *ngIf="block.transactions?.length > 0">
       <h3>Transactions ({{ block.transactions.length }})</h3>

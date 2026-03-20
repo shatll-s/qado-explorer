@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, RouterLink } from '@angular/router'
 import { ApiService } from '../../services/api.service'
 
 @Component({
   selector: 'app-tx',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './tx.component.html',
   styleUrl: './tx.component.scss'
 })
@@ -15,7 +15,7 @@ export class TxComponent implements OnInit {
   info: any = null
   error: string | null = null
 
-  constructor(private route: ActivatedRoute, private api: ApiService) {}
+  constructor(private route: ActivatedRoute, private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -27,8 +27,18 @@ export class TxComponent implements OnInit {
   loadTx() {
     this.error = null
     this.api.getTx(this.txid).subscribe({
-      next: info => this.info = info,
-      error: err => this.error = err.error?.error || 'Transaction not found'
+      next: info => { this.info = info; this.cdr.markForCheck() },
+      error: err => { this.error = err.error?.error || 'Transaction not found'; this.cdr.markForCheck() }
     })
+  }
+
+  formatAmount(atomic: string | number): string {
+    const n = typeof atomic === 'string' ? parseInt(atomic) : atomic
+    return (n / 1_000_000_000).toFixed(9)
+  }
+
+  formatTimestamp(ts: string): string {
+    if (!ts) return ''
+    return new Date(ts).toLocaleString()
   }
 }
