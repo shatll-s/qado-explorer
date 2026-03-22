@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   shortenHash(hash: string): string {
     if (!hash || hash.length <= 20) return hash
-    return hash.substring(0, 10) + '...' + hash.slice(-8)
+    return hash.substring(0, 6) + '...' + hash.slice(-4)
   }
 
   timeAgo(timestamp: string | number): string {

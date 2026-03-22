@@ -20,3 +20,34 @@
   a { color: #2563eb; }
 }
 .error { color: #ef4444; padding: 2rem; text-align: center; }
+.loading, .no-data { color: #6b7280; padding: 2rem; text-align: center; }
+.tx-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #e2e5ec;
+  border-radius: 8px;
+  overflow: hidden;
+  th, td { padding: 0.5rem 1rem; text-align: left; border-bottom: 1px solid #f0f1f3; }
+  th { color: #6b7280; font-weight: 500; background: #f9fafb; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f9fafb; }
+  a { color: #2563eb; text-decoration: none; &:hover { text-decoration: underline; } }
+  .hash { font-family: monospace; font-size: 0.85rem; }
+  .amount { font-weight: 600; white-space: nowrap; }
+  .coinbase { color: #9ca3af; font-style: italic; }
+}
+h3 { margin: 1.5rem 0 0.8rem; color: #1a1a2e; }
+.load-more {
+  display: block;
+  margin: 1rem auto;
+  padding: 0.5rem 2rem;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  &:hover { background: #1d4ed8; }
+  &:disabled { background: #93c5fd; cursor: wait; }
+}

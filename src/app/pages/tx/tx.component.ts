@@ -12,6 +12,7 @@ import { ApiService } from '../../services/api.service'
 })
 export class TxComponent implements OnInit {
   txid = ''
+  blockRef: string | null = null
   info: any = null
   error: string | null = null
 
@@ -20,13 +21,14 @@ export class TxComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.txid = params['txid']
+      this.blockRef = this.route.snapshot.queryParams['block_ref'] || null
       this.loadTx()
     })
   }
 
   loadTx() {
     this.error = null
-    this.api.getTx(this.txid).subscribe({
+    this.api.getTx(this.txid, this.blockRef || undefined).subscribe({
       next: info => { this.info = info; this.cdr.markForCheck() },
       error: err => { this.error = err.error?.error || 'Transaction not found'; this.cdr.markForCheck() }
     })

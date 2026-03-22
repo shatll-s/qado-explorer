@@ -34,7 +34,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let txid of block.txids">
-            <td><a [routerLink]="['/tx', txid]" class="mono">{{ txid }}</a></td>
+            <td><a [routerLink]="['/tx', txid]" [queryParams]="{block_ref: block.height}" class="mono">{{ txid }}</a></td>
           </tr>
         </tbody>
       </table>
@@ -53,9 +53,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let tx of block.transactions">
-            <td><a [routerLink]="['/tx', tx.txid || tx.hash]" class="mono hash">{{ (tx.txid || tx.hash)?.substring(0, 16) }}...</a></td>
-            <td><a *ngIf="tx.sender" [routerLink]="['/address', tx.sender]" class="mono hash">{{ tx.sender?.substring(0, 12) }}...</a><span *ngIf="!tx.sender">coinbase</span></td>
-            <td><a *ngIf="tx.recipient" [routerLink]="['/address', tx.recipient]" class="mono hash">{{ tx.recipient?.substring(0, 12) }}...</a></td>
+            <td><a [routerLink]="['/tx', tx.txid || tx.hash]" [queryParams]="{block_ref: block.height}" class="mono hash">{{ shortenHash(tx.txid || tx.hash) }}</a></td>
+            <td><a *ngIf="tx.sender" [routerLink]="['/address', tx.sender]" class="mono hash">{{ shortenHash(tx.sender) }}</a><span *ngIf="!tx.sender">coinbase</span></td>
+            <td><a *ngIf="tx.recipient" [routerLink]="['/address', tx.recipient]" class="mono hash">{{ shortenHash(tx.recipient) }}</a></td>
             <td>{{ formatAmount(tx.amount) }} QADO</td>
           </tr>
         </tbody>

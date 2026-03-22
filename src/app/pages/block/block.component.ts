@@ -59,4 +59,9 @@ export class BlockComponent implements OnInit {
     if (!ts) return ''
     return new Date(ts).toLocaleString()
   }
+
+  shortenHash(hash: string): string {
+    if (!hash || hash.length <= 14) return hash
+    return hash.substring(0, 6) + '...' + hash.slice(-4)
+  }
 }

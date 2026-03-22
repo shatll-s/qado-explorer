@@ -29,8 +29,14 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}/address/${addr}`)
   }
 
-  getTx(txid: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/tx/${txid}`)
+  getAddressIncoming(addr: string, cursor?: string): Observable<any> {
+    const qs = cursor ? `?cursor=${cursor}` : ''
+    return this.http.get(`${this.baseUrl}/address/${addr}/incoming${qs}`)
+  }
+
+  getTx(txid: string, blockRef?: string): Observable<any> {
+    const qs = blockRef ? `?block_ref=${blockRef}` : ''
+    return this.http.get(`${this.baseUrl}/tx/${txid}${qs}`)
   }
 
   getStats(): Observable<any> {

@@ -16,5 +16,39 @@
       <tr *ngIf="info.pending_incoming_count"><td class="label">Pending In</td><td>{{ info.pending_incoming_count }}</td></tr>
       <tr *ngIf="info.latest_observed_height"><td class="label">Last Seen Block</td><td><a [routerLink]="['/block', info.latest_observed_height]">{{ info.latest_observed_height }}</a></td></tr>
     </table>
+
+    <h3>Incoming Transactions</h3>
+
+    <div *ngIf="loadingTxs && allTxs.length === 0" class="loading">Loading transactions...</div>
+
+    <div *ngIf="!loadingTxs && allTxs.length === 0" class="no-data">No incoming transactions found</div>
+
+    <table class="tx-table" *ngIf="allTxs.length > 0">
+      <thead>
+        <tr>
+          <th>TxID</th>
+          <th>From</th>
+          <th>Amount</th>
+          <th>Block</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tx of visibleTxs">
+          <td><a [routerLink]="['/tx', tx.txid]" [queryParams]="tx.block_height ? {block_ref: tx.block_height} : {}" class="mono hash">{{ shortenHash(tx.txid) }}</a></td>
+          <td>
+            <span *ngIf="!tx.from_address" class="coinbase">Coinbase</span>
+            <a *ngIf="tx.from_address" [routerLink]="['/address', tx.from_address]" class="mono hash">{{ shortenHash(tx.from_address) }}</a>
+          </td>
+          <td class="amount">{{ formatAmount(tx.amount_atomic || 0) }} QADO</td>
+          <td><a *ngIf="tx.block_height" [routerLink]="['/block', tx.block_height]">{{ tx.block_height }}</a></td>
+          <td>{{ timeAgo(tx.timestamp_utc) }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button *ngIf="hasMore" class="load-more" (click)="showMore()" [disabled]="loadingTxs">
+      {{ loadingTxs ? 'Loading...' : 'Show more' }}
+    </button>
   </div>
 </div>
